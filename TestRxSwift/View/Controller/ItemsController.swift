@@ -13,21 +13,29 @@ class ItemsController: UITableViewController {
     let itemService = ItemService()
     let alertFactory = AlertFactory()
     var orderItems = [String]()
+    var sortedItems = [Item]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.backgroundColor = .yellow
+        self.registerCells()
+        self.loadAllItemData()
+        self.pickerInteraction()
         
-        self.tableView.register(TextCell.self, forCellReuseIdentifier: ReuseIdCellEnum.textReuseId.rawValue)
-        self.tableView.register(PictureCell.self, forCellReuseIdentifier: ReuseIdCellEnum.pictureReuseId.rawValue)
-        self.tableView.register(SelectorCell.self, forCellReuseIdentifier: ReuseIdCellEnum.selectorReuseId.rawValue)
+    }
+    
+    func pickerInteraction() {
         
-        
+    }
+    
+    func loadAllItemData() {
         itemService.loadAllItemData { (response) in
             DispatchQueue.main.async { [weak self] in
                 switch response.result {
                 case .success(let result):
                     self?.itemsResponse = result
+                    self?.orderItems = self?.itemsResponse?.view ?? []
+                    self?.sortedItems = (self?.sortItemByOrder()) ?? []
                     self?.updateTable()
                 case .failure(let error):
                     if let alert = self?.alertFactory.makeErrorAlert(text: "\(error)") {
@@ -36,11 +44,15 @@ class ItemsController: UITableViewController {
                 }
             }
         }
-
+    }
+    
+    func registerCells() {
+        self.tableView.register(TextCell.self, forCellReuseIdentifier: ReuseIdCellEnum.textReuseId.rawValue)
+        self.tableView.register(PictureCell.self, forCellReuseIdentifier: ReuseIdCellEnum.pictureReuseId.rawValue)
+        self.tableView.register(SelectorCell.self, forCellReuseIdentifier: ReuseIdCellEnum.selectorReuseId.rawValue)
     }
     
     func updateTable() {
-        self.orderItems = self.itemsResponse?.view ?? []
         self.tableView.reloadData()
     }
 
@@ -53,15 +65,24 @@ class ItemsController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.itemsResponse?.data.count ?? 0
+        return self.sortedItems.count
     }
 
+    func sortItemByOrder() -> [Item] {
+        var sortedItems = [Item]()
+        for orderItem in self.orderItems {
+            if let indexArr = self.itemsResponse?.data.firstIndex(where: { $0.name == orderItem }) {
+                if let sortedData = self.itemsResponse?.data[indexArr] {
+                    sortedItems.append(sortedData)
+                }
+            }
+        }
+        return sortedItems
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let currentData = itemsResponse?.data[indexPath.row] else {
-            return UITableViewCell()
-        }
+        let currentData = self.sortedItems[indexPath.row]
         if currentData.name == CellTypeEnum.text.rawValue {
             
             return self.setupTextCell(tableView, cellForRowAt: indexPath, currentData: currentData)
@@ -119,16 +140,16 @@ class ItemsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let currentData = itemsResponse?.data[indexPath.row]
-        if currentData?.name == CellTypeEnum.text.rawValue {
+        let currentData = self.sortedItems[indexPath.row]
+        if currentData.name == CellTypeEnum.text.rawValue {
             
             return MarginSettingsEnum.heightTextCell.rawValue
         }
-        if currentData?.name == CellTypeEnum.picture.rawValue {
+        if currentData.name == CellTypeEnum.picture.rawValue {
             
             return MarginSettingsEnum.heightPictureCell.rawValue
         }
-        if currentData?.name == CellTypeEnum.selector.rawValue {
+        if currentData.name == CellTypeEnum.selector.rawValue {
 
             return MarginSettingsEnum.heightSelectorCell.rawValue
         }
@@ -136,9 +157,7 @@ class ItemsController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let currentData = itemsResponse?.data[indexPath.row] else {
-            return
-        }
+        let currentData = self.sortedItems[indexPath.row]
         let alert = self.alertFactory.makeMessageAlert(text: currentData.name)
         self.present(alert, animated: true, completion: nil)
         

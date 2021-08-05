@@ -32,7 +32,8 @@ struct Item: Decodable {
                 if let currentName = try? container.decode(String.self, forKey: .name) {
                     name = currentName
                 } else {
-                    throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a JSON"))
+                    throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: container.codingPath,
+                                                                            debugDescription: "Not a JSON"))
                 }
             }
         }

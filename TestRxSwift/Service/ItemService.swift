@@ -10,14 +10,16 @@ import Alamofire
 
 class ItemService {
     
-    func loadAllItemData(completion: @escaping (GetItemsResponse) -> Void) {
+    func loadAllItemData(completion: @escaping (AFDataResponse<GetItemsResponse>) -> Void) -> DataRequest{
 
-        AF.request(ServerSettingEnum.getAllItems.rawValue).responseDecodable(of: GetItemsResponse.self) { response in
-            guard let itemsResponse = response.value else {
-                return
-            }
-            completion(itemsResponse)
-        }
+//        AF.request(ServerSettingEnum.getAllItems.rawValue).responseDecodable(of: GetItemsResponse.self) { response in
+//            guard let itemsResponse = response.value else {
+//                return
+//            }
+//            completion(itemsResponse)
+//        }
+        
+        return AF.request(ServerSettingEnum.getAllItems.rawValue).responseDecodable(completionHandler: completion)
         
     }
 }

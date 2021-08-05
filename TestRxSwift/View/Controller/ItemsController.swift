@@ -10,24 +10,37 @@ import UIKit
 class ItemsController: UITableViewController {
     
     var itemsResponse: GetItemsResponse?
+    let itemService = ItemService()
+    let alertFactory = AlertFactory()
+    var orderItems = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .yellow
+        self.tableView.backgroundColor = .yellow
         
         self.tableView.register(TextCell.self, forCellReuseIdentifier: ReuseIdCellEnum.textReuseId.rawValue)
         self.tableView.register(PictureCell.self, forCellReuseIdentifier: ReuseIdCellEnum.pictureReuseId.rawValue)
         self.tableView.register(SelectorCell.self, forCellReuseIdentifier: ReuseIdCellEnum.selectorReuseId.rawValue)
         
-        let service = ItemService()
-        service.loadAllItemData { [weak self] itemsResponse in
-            self?.itemsResponse = itemsResponse
-            self?.updateTable()
+        
+        itemService.loadAllItemData { (response) in
+            DispatchQueue.main.async { [weak self] in
+                switch response.result {
+                case .success(let result):
+                    self?.itemsResponse = result
+                    self?.updateTable()
+                case .failure(let error):
+                    if let alert = self?.alertFactory.makeErrorAlert(text: "\(error)") {
+                        self?.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
         }
 
     }
     
     func updateTable() {
+        self.orderItems = self.itemsResponse?.view ?? []
         self.tableView.reloadData()
     }
 
@@ -45,21 +58,21 @@ class ItemsController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let currentData = itemsResponse?.data[indexPath.row]
-        guard (currentData != nil) else {
+        
+        guard let currentData = itemsResponse?.data[indexPath.row] else {
             return UITableViewCell()
         }
-        if currentData?.name == CellTypeEnum.text.rawValue {
+        if currentData.name == CellTypeEnum.text.rawValue {
             
-            return self.setupTextCell(tableView, cellForRowAt: indexPath, currentData: currentData!)
+            return self.setupTextCell(tableView, cellForRowAt: indexPath, currentData: currentData)
         }
-        if currentData?.name == CellTypeEnum.picture.rawValue {
+        if currentData.name == CellTypeEnum.picture.rawValue {
             
-            return self.setupPictureCell(tableView, cellForRowAt: indexPath, currentData: currentData!)
+            return self.setupPictureCell(tableView, cellForRowAt: indexPath, currentData: currentData)
         }
-        if currentData?.name == CellTypeEnum.selector.rawValue {
+        if currentData.name == CellTypeEnum.selector.rawValue {
 
-            return self.setupSelectorCell(tableView, cellForRowAt: indexPath, currentData: currentData!)
+            return self.setupSelectorCell(tableView, cellForRowAt: indexPath, currentData: currentData)
         }
         return UITableViewCell()
     }
@@ -119,9 +132,16 @@ class ItemsController: UITableViewController {
 
             return MarginSettingsEnum.heightSelectorCell.rawValue
         }
-        return self.view.bounds.size.width / 2
+        return MarginSettingsEnum.heightCell.rawValue
     }
 
-
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let currentData = itemsResponse?.data[indexPath.row] else {
+            return
+        }
+        let alert = self.alertFactory.makeMessageAlert(text: currentData.name)
+        self.present(alert, animated: true, completion: nil)
+        
+    }
 
 }

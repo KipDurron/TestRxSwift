@@ -33,8 +33,8 @@ class SelectorCell: UITableViewCell {
             pickerView.widthAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.widthAnchor, constant: -MarginSettingsEnum.forSpaceWidthBorder.rawValue),
             pickerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -MarginSettingsEnum.baseBottomAnchor.rawValue)
         ])
-        self.pickerView.delegate = self
         self.pickerView.dataSource = self
+        self.pickerView.delegate = self
     }
     
     func setupData(pickerData: [Variant], startSelected: Int) {
@@ -68,7 +68,7 @@ class SelectorCell: UITableViewCell {
 
 }
 
-extension SelectorCell: UIPickerViewDelegate, UIPickerViewDataSource {
+extension SelectorCell: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
@@ -81,5 +81,8 @@ extension SelectorCell: UIPickerViewDelegate, UIPickerViewDataSource {
         self.pickerData[row].text
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        debugPrint("select")
+    }
     
 }

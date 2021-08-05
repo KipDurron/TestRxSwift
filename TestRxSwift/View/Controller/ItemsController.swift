@@ -9,6 +9,8 @@ import UIKit
 
 class ItemsController: UITableViewController {
     
+    private let presenter: AllItemsViewToPresenter
+    
     var itemsResponse: GetItemsResponse?
     let itemService = ItemService()
     let alertFactory = AlertFactory()
@@ -19,31 +21,17 @@ class ItemsController: UITableViewController {
         super.viewDidLoad()
         self.tableView.backgroundColor = .yellow
         self.registerCells()
-        self.loadAllItemData()
-        self.pickerInteraction()
+        self.presenter.startGetAllItem()
         
     }
-    
-    func pickerInteraction() {
-        
+    init(presenter: AllItemsViewToPresenter) {
+        self.presenter = presenter
+        super.init(style: .grouped)
+       
     }
     
-    func loadAllItemData() {
-        itemService.loadAllItemData { (response) in
-            DispatchQueue.main.async { [weak self] in
-                switch response.result {
-                case .success(let result):
-                    self?.itemsResponse = result
-                    self?.orderItems = self?.itemsResponse?.view ?? []
-                    self?.sortedItems = (self?.sortItemByOrder()) ?? []
-                    self?.updateTable()
-                case .failure(let error):
-                    if let alert = self?.alertFactory.makeErrorAlert(text: "\(error)") {
-                        self?.present(alert, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func registerCells() {
@@ -163,4 +151,26 @@ class ItemsController: UITableViewController {
         
     }
 
+}
+
+extension ItemsController: AllItemsPresenterToView {
+    func getAllItem(response: GetItemsResponse) {
+        self.itemsResponse = response
+        self.orderItems = self.itemsResponse?.view ?? []
+        self.sortedItems = self.sortItemByOrder()
+        self.updateTable()
+    }
+    
+    func showMessage(text: String, messageType: MessageTypeEnum) {
+        let message: UIAlertController
+        switch messageType {
+        case .message:
+            message = alertFactory.makeMessageAlert(text: text)
+        case .error:
+            message = alertFactory.makeErrorAlert(text: text)
+        }
+        self.present(message, animated: true, completion: nil)
+    }
+    
+    
 }

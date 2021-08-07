@@ -15,4 +15,15 @@ class ItemService {
         AF.request(ServerSettingEnum.getAllItems.rawValue).responseDecodable(completionHandler: completion)
         
     }
+    
+    func sortItemByOrder(getItemsResponse: GetItemsResponse) -> [Item] {
+        var sortedItems = [Item]()
+        for orderItem in getItemsResponse.view {
+            if let indexArr = getItemsResponse.data.firstIndex(where: { $0.name == orderItem }) {
+                let sortedData = getItemsResponse.data[indexArr]
+                sortedItems.append(sortedData)
+            }
+        }
+        return sortedItems
+    }
 }

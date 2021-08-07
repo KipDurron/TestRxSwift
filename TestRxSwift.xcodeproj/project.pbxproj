@@ -36,8 +36,7 @@
 		EC01B5C826BAFE7A00423C96 /* ItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC01B5C726BAFE7A00423C96 /* ItemsViewModel.swift */; };
 		EC31C5A726BBA66200C38DC3 /* AlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC31C5A626BBA66200C38DC3 /* AlertFactory.swift */; };
 		EC31C5AA26BBAA0F00C38DC3 /* MessageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC31C5A926BBAA0E00C38DC3 /* MessageTypeEnum.swift */; };
-		EC31C5AD26BBEAA800C38DC3 /* AllItemsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC31C5AC26BBEAA800C38DC3 /* AllItemsPresenter.swift */; };
-		EC31C5AF26BBEAD100C38DC3 /* AllItemsInteractionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC31C5AE26BBEAD100C38DC3 /* AllItemsInteractionProtocol.swift */; };
+		ECBCD83E26BECFDD004995E4 /* TypeErrorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBCD83D26BECFDD004995E4 /* TypeErrorEnum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,8 +72,7 @@
 		EC01B5C726BAFE7A00423C96 /* ItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewModel.swift; sourceTree = "<group>"; };
 		EC31C5A626BBA66200C38DC3 /* AlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFactory.swift; sourceTree = "<group>"; };
 		EC31C5A926BBAA0E00C38DC3 /* MessageTypeEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTypeEnum.swift; sourceTree = "<group>"; };
-		EC31C5AC26BBEAA800C38DC3 /* AllItemsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllItemsPresenter.swift; sourceTree = "<group>"; };
-		EC31C5AE26BBEAD100C38DC3 /* AllItemsInteractionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllItemsInteractionProtocol.swift; sourceTree = "<group>"; };
+		ECBCD83D26BECFDD004995E4 /* TypeErrorEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeErrorEnum.swift; sourceTree = "<group>"; };
 		F2AEA22248550F986FCDB2A1 /* Pods-TestRxSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestRxSwift.debug.xcconfig"; path = "Target Support Files/Pods-TestRxSwift/Pods-TestRxSwift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,7 +126,6 @@
 		EC01B57826BAA3BE00423C96 /* TestRxSwift */ = {
 			isa = PBXGroup;
 			children = (
-				EC31C5AB26BBEA9200C38DC3 /* Presenter */,
 				EC31C5A826BBA95200C38DC3 /* Factory */,
 				EC01B5BC26BAC86D00423C96 /* Extention */,
 				EC01B59726BAB4DE00423C96 /* Setting */,
@@ -209,6 +206,7 @@
 				EC01B59826BAB4F000423C96 /* ServerSettingEnum.swift */,
 				EC01B5A926BABFF800423C96 /* CellTypeEnum.swift */,
 				EC01B5C326BAE45900423C96 /* ReuseIdCellEnum.swift */,
+				ECBCD83D26BECFDD004995E4 /* TypeErrorEnum.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -248,15 +246,6 @@
 				EC31C5A626BBA66200C38DC3 /* AlertFactory.swift */,
 			);
 			path = Factory;
-			sourceTree = "<group>";
-		};
-		EC31C5AB26BBEA9200C38DC3 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				EC31C5AC26BBEAA800C38DC3 /* AllItemsPresenter.swift */,
-				EC31C5AE26BBEAD100C38DC3 /* AllItemsInteractionProtocol.swift */,
-			);
-			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,7 +372,6 @@
 				EC01B5BE26BAC89800423C96 /* ExUIImage.swift in Sources */,
 				EC01B59B26BAB70100423C96 /* GetItemsResponse.swift in Sources */,
 				EC01B5A126BABC3200423C96 /* TextData.swift in Sources */,
-				EC31C5AD26BBEAA800C38DC3 /* AllItemsPresenter.swift in Sources */,
 				EC01B5AA26BABFF800423C96 /* CellTypeEnum.swift in Sources */,
 				EC01B59F26BABBBD00423C96 /* PictureData.swift in Sources */,
 				EC01B59926BAB4F000423C96 /* ServerSettingEnum.swift in Sources */,
@@ -395,9 +383,9 @@
 				EC01B5AF26BAC11500423C96 /* BaseLabelArea.swift in Sources */,
 				EC31C5A726BBA66200C38DC3 /* AlertFactory.swift in Sources */,
 				EC01B5A826BABF4600423C96 /* PictureCell.swift in Sources */,
-				EC31C5AF26BBEAD100C38DC3 /* AllItemsInteractionProtocol.swift in Sources */,
 				EC01B58E26BAA71B00423C96 /* ItemsController.swift in Sources */,
 				EC01B57C26BAA3BE00423C96 /* SceneDelegate.swift in Sources */,
+				ECBCD83E26BECFDD004995E4 /* TypeErrorEnum.swift in Sources */,
 				EC01B59626BAB42200423C96 /* ItemService.swift in Sources */,
 				EC01B5B726BAC5C600423C96 /* MarginSettingsEnum.swift in Sources */,
 			);

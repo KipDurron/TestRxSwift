@@ -6,28 +6,53 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ItemsController: UITableViewController {
     
-    private let presenter: AllItemsViewToPresenter
-    
-    var itemsResponse: GetItemsResponse?
-    let itemService = ItemService()
     let alertFactory = AlertFactory()
-    var orderItems = [String]()
-    var sortedItems = [Item]()
-
+//    public var items = PublishSubject<[Item]>()
+    var items = [Item]()
+    var itemsViewModel = ItemsViewModel()
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.backgroundColor = .yellow
         self.registerCells()
-        self.presenter.startGetAllItem()
+        self.setupBindings()
+        self.itemsViewModel.startGetAllItem()
         
     }
-    init(presenter: AllItemsViewToPresenter) {
-        self.presenter = presenter
-        super.init(style: .grouped)
-       
+    
+    
+    private func setupBindings() {
+        self.itemsViewModel
+            .error
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (error) in
+                switch error {
+                case .internetError(let message):
+                    self.alertFactory.showErrorAlert(text: message, vc: self)
+                case .serverMessage(let message):
+                    self.alertFactory.showErrorAlert(text: message, vc: self)
+                }
+            }).disposed(by: disposeBag)
+        
+        self.itemsViewModel
+            .items
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (newItems) in
+                self.items = newItems
+                self.updateTable()
+            }).disposed(by: disposeBag)
+
+        
+        }
+
+    override init(style: UITableView.Style) {
+        super.init(style: style)
     }
     
     required init?(coder: NSCoder) {
@@ -53,24 +78,13 @@ class ItemsController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.sortedItems.count
+        return self.items.count
     }
 
-    func sortItemByOrder() -> [Item] {
-        var sortedItems = [Item]()
-        for orderItem in self.orderItems {
-            if let indexArr = self.itemsResponse?.data.firstIndex(where: { $0.name == orderItem }) {
-                if let sortedData = self.itemsResponse?.data[indexArr] {
-                    sortedItems.append(sortedData)
-                }
-            }
-        }
-        return sortedItems
-    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let currentData = self.sortedItems[indexPath.row]
+        let currentData = self.items[indexPath.row]
         if currentData.name == CellTypeEnum.text.rawValue {
             
             return self.setupTextCell(tableView, cellForRowAt: indexPath, currentData: currentData)
@@ -128,7 +142,7 @@ class ItemsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let currentData = self.sortedItems[indexPath.row]
+        let currentData = self.items[indexPath.row]
         if currentData.name == CellTypeEnum.text.rawValue {
             
             return MarginSettingsEnum.heightTextCell.rawValue
@@ -145,32 +159,8 @@ class ItemsController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currentData = self.sortedItems[indexPath.row]
-        let alert = self.alertFactory.makeMessageAlert(text: currentData.name)
-        self.present(alert, animated: true, completion: nil)
-        
+        let currentData = self.items[indexPath.row]
+        self.alertFactory.showMessageAlert(text: currentData.name, vc: self)
     }
 
-}
-
-extension ItemsController: AllItemsPresenterToView {
-    func getAllItem(response: GetItemsResponse) {
-        self.itemsResponse = response
-        self.orderItems = self.itemsResponse?.view ?? []
-        self.sortedItems = self.sortItemByOrder()
-        self.updateTable()
-    }
-    
-    func showMessage(text: String, messageType: MessageTypeEnum) {
-        let message: UIAlertController
-        switch messageType {
-        case .message:
-            message = alertFactory.makeMessageAlert(text: text)
-        case .error:
-            message = alertFactory.makeErrorAlert(text: text)
-        }
-        self.present(message, animated: true, completion: nil)
-    }
-    
-    
 }

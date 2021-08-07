@@ -9,17 +9,17 @@ import UIKit
 
 class AlertFactory {
     
-    func makeErrorAlert(text: String) -> UIAlertController {
+    func showErrorAlert(text: String, vc: UIViewController) {
         let alert = UIAlertController(title: "🤬 Error", message: text, preferredStyle: .alert)
         let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(actionOk)
-        return alert
+        vc.present(alert, animated: true, completion: nil)
     }
 
-    func makeMessageAlert(text: String) -> UIAlertController {
+    func showMessageAlert(text: String, vc: UIViewController) {
         let alert = UIAlertController(title: "💕 Message", message: text, preferredStyle: .alert)
         let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(actionOk)
-        return alert
+        vc.present(alert, animated: true, completion: nil)
     }
 }

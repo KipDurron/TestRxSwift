@@ -10,10 +10,21 @@ import RxCocoa
 
 class ItemsViewModel {
     
-    public enum HomeError {
-           case internetError(String)
-           case serverMessage(String)
-       }
-    public let itemsResponse : PublishSubject<GetItemsResponse> = PublishSubject()
+    let itemService = ItemService()
+    public let items: PublishSubject<[Item]> = PublishSubject()
+    public let error : PublishSubject<TypeErrorEnum> = PublishSubject()
+    
+    func startGetAllItem() {
+        itemService.loadAllItemData { [weak self] (response) in
+           switch response.result {
+           case .success(let result):
+            if let loadItems = self?.itemService.sortItemByOrder(getItemsResponse: result) {
+                self?.items.onNext(loadItems)
+            }
+           case .failure(let error):
+            self?.error.onNext(.serverMessage("\(error)"))
+           }
+        }
+    }
     
 }

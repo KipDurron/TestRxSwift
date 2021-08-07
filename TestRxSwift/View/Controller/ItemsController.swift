@@ -12,7 +12,6 @@ import RxCocoa
 class ItemsController: UITableViewController {
     
     let alertFactory = AlertFactory()
-//    public var items = PublishSubject<[Item]>()
     var items = [Item]()
     var itemsViewModel = ItemsViewModel()
     let disposeBag = DisposeBag()

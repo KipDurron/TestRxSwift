@@ -18,7 +18,6 @@ class ItemsController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.backgroundColor = .gray
         self.registerCells()
         self.setupBindings()
         self.itemsViewModel.startGetAllItem()

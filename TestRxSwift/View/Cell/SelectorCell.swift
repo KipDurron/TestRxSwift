@@ -1,13 +1,8 @@
-import RxSwift
 import UIKit
-
-class SelectorCellViewModel {
-    public let selectedVariant: PublishSubject<Variant> = PublishSubject()
-}
 
 class SelectorCell: UITableViewCell {
     
-    let viewModel = SelectorCellViewModel()
+    let viewModel = SelectorViewModel()
     var pickerData = [Variant]()
     var startSelected: Int?
 

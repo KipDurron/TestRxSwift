@@ -163,7 +163,14 @@ class ItemsController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currentData = self.items[indexPath.row]
-        self.alertFactory.showMessageAlert(text: currentData.name, vc: self)
+        if currentData.name == CellTypeEnum.text.rawValue {
+            let string = "name: \(currentData.name)" + ", text: " + ((currentData.data as? TextData)?.text ?? "")
+            self.alertFactory.showMessageAlert(text: string, vc: self)
+        }
+        if currentData.name == CellTypeEnum.picture.rawValue {
+            let string = "name: \(currentData.name)" + ", text: " + ((currentData.data as? PictureData)?.text ?? "")
+            self.alertFactory.showMessageAlert(text: string, vc: self)
+        }
     }
 
 }

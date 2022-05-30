@@ -23,7 +23,7 @@ class SelectorCell: UITableViewCell {
     
     private func configView() {
         self.contentView.addSubview(self.pickerView)
-        pickerView.backgroundColor = .cyan
+        pickerView.backgroundColor = .yellow
         NSLayoutConstraint.activate([
             pickerView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             pickerView.topAnchor.constraint(equalTo: self.contentView.topAnchor,

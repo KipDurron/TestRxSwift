@@ -26,7 +26,6 @@
 		EC01B5AD26BAC08B00423C96 /* BaseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC01B5AC26BAC08B00423C96 /* BaseLabel.swift */; };
 		EC01B5AF26BAC11500423C96 /* BaseLabelArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC01B5AE26BAC11500423C96 /* BaseLabelArea.swift */; };
 		EC01B5B326BAC33A00423C96 /* BaseUIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC01B5B226BAC33A00423C96 /* BaseUIImageView.swift */; };
-		EC01B5B526BAC4ED00423C96 /* BaseHorizontalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC01B5B426BAC4ED00423C96 /* BaseHorizontalStackView.swift */; };
 		EC01B5B726BAC5C600423C96 /* MarginSettingsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC01B5B626BAC5C600423C96 /* MarginSettingsEnum.swift */; };
 		EC01B5B926BAC68000423C96 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC01B5B826BAC68000423C96 /* TextCell.swift */; };
 		EC01B5BE26BAC89800423C96 /* ExUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC01B5BD26BAC89800423C96 /* ExUIImage.swift */; };
@@ -62,7 +61,6 @@
 		EC01B5AC26BAC08B00423C96 /* BaseLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLabel.swift; sourceTree = "<group>"; };
 		EC01B5AE26BAC11500423C96 /* BaseLabelArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLabelArea.swift; sourceTree = "<group>"; };
 		EC01B5B226BAC33A00423C96 /* BaseUIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUIImageView.swift; sourceTree = "<group>"; };
-		EC01B5B426BAC4ED00423C96 /* BaseHorizontalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHorizontalStackView.swift; sourceTree = "<group>"; };
 		EC01B5B626BAC5C600423C96 /* MarginSettingsEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarginSettingsEnum.swift; sourceTree = "<group>"; };
 		EC01B5B826BAC68000423C96 /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		EC01B5BD26BAC89800423C96 /* ExUIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExUIImage.swift; sourceTree = "<group>"; };
@@ -226,7 +224,6 @@
 				EC01B5AC26BAC08B00423C96 /* BaseLabel.swift */,
 				EC01B5AE26BAC11500423C96 /* BaseLabelArea.swift */,
 				EC01B5B226BAC33A00423C96 /* BaseUIImageView.swift */,
-				EC01B5B426BAC4ED00423C96 /* BaseHorizontalStackView.swift */,
 				EC01B5C126BACD7E00423C96 /* BasePickerView.swift */,
 			);
 			path = Base;
@@ -378,7 +375,6 @@
 				EC01B5B326BAC33A00423C96 /* BaseUIImageView.swift in Sources */,
 				EC01B57A26BAA3BE00423C96 /* AppDelegate.swift in Sources */,
 				EC01B5A626BABCA900423C96 /* Variant.swift in Sources */,
-				EC01B5B526BAC4ED00423C96 /* BaseHorizontalStackView.swift in Sources */,
 				EC01B5A326BABC4500423C96 /* SelectorData.swift in Sources */,
 				EC01B5AF26BAC11500423C96 /* BaseLabelArea.swift in Sources */,
 				EC31C5A726BBA66200C38DC3 /* AlertFactory.swift in Sources */,

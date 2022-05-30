@@ -12,7 +12,9 @@ extension UIImage {
         DispatchQueue.global().async {
             do {
                 if urlStr == nil {
-                    completion(UIImage(systemName: "photo")!)
+                    DispatchQueue.main.async {
+                        completion(UIImage(systemName: "photo")!)
+                    }
                     return
                 }
                 let url = URL(string: urlStr!)
@@ -26,6 +28,9 @@ extension UIImage {
                     completion(image)
                 }
             } catch {
+                DispatchQueue.main.async {
+                    completion(UIImage(systemName: "photo")!)
+                }
                 debugPrint("faled get Image from Url")
             }
         }

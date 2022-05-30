@@ -9,11 +9,6 @@ import UIKit
 
 class PictureCell: UITableViewCell {
     
-    lazy var stackContent: BaseHorizontalStackView = {
-        let stackContent = BaseHorizontalStackView()
-        return stackContent
-    }()
-    
     lazy var pictureImageView: BaseUIImageView = {
         pictureImageView = BaseUIImageView()
         return pictureImageView
@@ -30,17 +25,21 @@ class PictureCell: UITableViewCell {
     }
     
     private func configView() {
-        self.contentView.addSubview(self.stackContent)
-        stackContent.addArrangedSubview(self.pictureImageView)
-        stackContent.addArrangedSubview(self.textLabelArea)
+        self.contentView.addSubview(self.pictureImageView)
+        self.contentView.addSubview(self.textLabelArea)
         NSLayoutConstraint.activate([
-            stackContent.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            stackContent.topAnchor.constraint(equalTo: self.contentView.topAnchor,
+            pictureImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor,
                                          constant:MarginSettingsEnum.baseTopAnchor.rawValue),
-            stackContent.widthAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.widthAnchor, constant: -MarginSettingsEnum.forSpaceWidthBorder.rawValue),
+            pictureImageView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: MarginSettingsEnum.forSpaceWidthBorder.rawValue),
             pictureImageView.widthAnchor.constraint(equalToConstant: 50),
             pictureImageView.heightAnchor.constraint(equalToConstant: 50),
-            stackContent.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -MarginSettingsEnum.baseBottomAnchor.rawValue)
+            pictureImageView.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor, constant: -MarginSettingsEnum.baseBottomAnchor.rawValue),
+            
+            textLabelArea.leadingAnchor.constraint(greaterThanOrEqualTo: pictureImageView.trailingAnchor, constant: MarginSettingsEnum.forSpaceWidthBorder.rawValue),
+            textLabelArea.topAnchor.constraint(equalTo: pictureImageView.topAnchor),
+            textLabelArea.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -MarginSettingsEnum.baseBottomAnchor.rawValue),
+            textLabelArea.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor, constant: -MarginSettingsEnum.baseBottomAnchor.rawValue)
+
         ])
     }
     

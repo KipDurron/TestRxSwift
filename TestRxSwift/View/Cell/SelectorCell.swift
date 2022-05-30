@@ -1,15 +1,13 @@
-//
-//  SelectorCell.swift
-//  TestRxSwift
-//
-//  Created by Илья Кадыров on 04.08.2021.
-//
-
+import RxSwift
 import UIKit
+
+class SelectorCellViewModel {
+    public let selectedVariant: PublishSubject<Variant> = PublishSubject()
+}
 
 class SelectorCell: UITableViewCell {
     
-    
+    let viewModel = SelectorCellViewModel()
     var pickerData = [Variant]()
     var startSelected: Int?
 
@@ -82,7 +80,7 @@ extension SelectorCell: UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        debugPrint("select")
+        viewModel.selectedVariant.onNext(self.pickerData[row])
     }
     
 }

@@ -28,7 +28,7 @@ class TextCell: UITableViewCell {
             textLabelArea.topAnchor.constraint(equalTo: self.contentView.topAnchor,
                                                constant:MarginSettingsEnum.baseTopAnchor.rawValue),
             textLabelArea.widthAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.widthAnchor, constant: -MarginSettingsEnum.forSpaceWidthBorder.rawValue),
-            textLabelArea.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -MarginSettingsEnum.baseBottomAnchor.rawValue)
+            textLabelArea.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor, constant: -MarginSettingsEnum.baseBottomAnchor.rawValue)
         ])
     }
     

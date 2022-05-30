@@ -18,7 +18,7 @@ class ItemsController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.backgroundColor = .yellow
+        self.tableView.backgroundColor = .gray
         self.registerCells()
         self.setupBindings()
         self.itemsViewModel.startGetAllItem()
@@ -46,8 +46,6 @@ class ItemsController: UITableViewController {
                 self.items = newItems
                 self.updateTable()
             }).disposed(by: disposeBag)
-
-        
         }
 
     override init(style: UITableView.Style) {
@@ -109,6 +107,12 @@ class ItemsController: UITableViewController {
             return UITableViewCell()
         }
         cell.setupData(pickerData: selectorData.variants, startSelected: selectorData.selectedId)
+        cell.viewModel.selectedVariant
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (variant) in
+                self.alertFactory.showMessageAlert(text: "id: \(variant.id)" + ", Text: \(variant.text)"
+                                                 , vc: self)
+            }).disposed(by: disposeBag)
         return cell
     }
     
